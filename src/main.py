@@ -1,35 +1,44 @@
 import os
-from config import DATA_DIR, RESULTS_DIR, TITANIC_DATASET_SLUG, WIKI_LARGEST_COMPANIES, IRIS_URL
-from load import get_kaggle_data, get_web_csv_data
+from config import CDC_API_URL, FBI_XLSX_PATH, CENSUS_CSV_PATH, RESULTS_DIR, DATA_DIR
+from load import get_mental_health_data, get_crime_data, get_census_data
+from process import process_cdc_data, process_crime_data, process_census_data, merge_datasets
 from analyze import plot_statistics
-from process import process_wiki_data
 
+    
 if __name__ == "__main__":
     # Create a data directory
     os.makedirs(DATA_DIR, exist_ok=True)
 
-    # --- Kaggle Data ---
-    # We'll use the classic Titanic dataset
-    kaggle_df = get_kaggle_data(dataset_slug=TITANIC_DATASET_SLUG, extract_dir=DATA_DIR)
-    if kaggle_df is not None:
-        print(f"\nKaggle (Titanic) Data Head:\n{kaggle_df.head()}")
-        plot_statistics(kaggle_df, 'Titanic', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
+    # --- Load Data
+    print("----- LOADING DATA ----- ")
+    cdc_raw = get_mental_health_data(CDC_API_URL)
+    fbi_raw = get_crime_data(FBI_XLSX_PATH)
+    census_raw = get_census_data(CENSUS_CSV_PATH)
 
-    # --- Web CSV Data ---
-    # We'll use the Iris dataset from a public repo
-    web_df = get_web_csv_data(IRIS_URL)
-    if web_df is not None:
-        print(f"\nWeb (Iris) Data Head:\n{web_df.head()}")
-        plot_statistics(web_df, 'Iris', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
+    # --- Process Data 
+    print("----- PROCESSING DATA ----- ")
+    cdc_df = process_cdc_data(cdc_raw)
+    fbi_df = process_crime_data(fbi_raw)
+    census_df = process_census_data(census_raw)
+    merged = merge_datasets(cdc_df, fbi_df, census_df)
+    
+    # -- Analyze Data
+    print("----- ANALYZING DATA ----- ")
+    plot_statistics(merged[['state_name', 'mental_health_pct']], 'CDC_Mental_Health', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['state_name', 'violent_crime']], 'FBI_Crime', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['state_name', 'poverty_rate']], 'Census_Poverty', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['state_name', 'no_insurance_pct']], 'Census_Insurance', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['state_name', 'unemployment_rate']], 'Census_Unemployment', result_dir=RESULTS_DIR)
 
-    # --- Wikipedia Scraped Data ---
-    # We'll scrape a table of the largest companies
-    # process data firsts
-    plot_df = process_wiki_data(WIKI_LARGEST_COMPANIES)
-    # plot results
-    plot_statistics(plot_df.dropna(), 'Wikipedia_Companies', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
+    #scatter plots
+    plot_statistics(merged[['mental_health_pct', 'violent_crime']], 'MentalHealth_vs_Crime', result_dir=RESULTS_DIR)
+    # mental health vs census features
+    plot_statistics(merged[['mental_health_pct', 'poverty_rate']], 'MentalHealth_vs_Poverty', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['mental_health_pct', 'unemployment_rate']], 'MentalHealth_vs_Unemployment', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['mental_health_pct', 'no_insurance_pct']], 'MentalHealth_vs_Insurance', result_dir=RESULTS_DIR)
+    # crime vs census features
+    plot_statistics(merged[['violent_crime', 'poverty_rate']], 'Crime_vs_Poverty', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['violent_crime', 'unemployment_rate']], 'Crime_vs_Unemployment', result_dir=RESULTS_DIR)
+    plot_statistics(merged[['violent_crime', 'no_insurance_pct']], 'Crime_vs_Insurance', result_dir=RESULTS_DIR)
 
     print("\n--- Data collection and plotting complete. Check the 'results' directory. ---")

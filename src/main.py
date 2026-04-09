@@ -8,6 +8,7 @@ from analyze import plot_statistics
 if __name__ == "__main__":
     # Create a data directory
     os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(RESULTS_DIR, exist_ok=True)
 
     # --- Load Data
     print("----- LOADING DATA ----- ")

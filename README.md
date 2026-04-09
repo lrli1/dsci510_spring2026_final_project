@@ -1,4 +1,4 @@
-# Sample Project <Mental Health and Crime Rates, with Socioeconomic Factors>
+# <Mental Health and Crime Rates, with Socioeconomic Factors>
 This project aims to explore the relationship between mental health status and crime rates at the state level. Poor untreated mental health can often lead to violence, confusion, and impulsive behavior. Therefore, it is important to address the potential patterns and correlations that may exist. That way, we can implement policy programs, health insurance, mental health shelters, etc. to help solve crime from the ground-up rather than top-down. There are many confounders to crime rates as well, so CDC economic data including health insurance rates, unemployment rates, and poverty rates are analyzed as well.
 
 # Data sources

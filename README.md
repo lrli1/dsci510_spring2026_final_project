@@ -10,28 +10,25 @@ United States Census Bureau: ACS 5-year Estimates (2020-2025) Selected Economic 
 Economic demographic data for states in the US, 
 
 # Results 
-West Virginia has the highest percentage of population who is depressed per month (over 20 days out of the month)
-California has the highest amount of violent crime 
-Mississippi faces the highets poverty rates 
-Texas populations have the most people with no health insurance 
-Nevada has the highest unemployment rate
+West Virginia has the highest percentage of population who is depressed per month (over 20 days out of the month).
+California has the highest amount of violent crime.
+Mississippi faces the highets poverty rates.
+Texas populations have the most people with no health insurance. 
+Nevada has the highest unemployment rate.
 
-Mental health and violent crime are not strongly positively correlated
-Mental health and poverty are moderately positively correlated 
-Mental health and unemployment rate are slightly positively correlated 
-Mental health and insurance rate are moderately positively correlated 
+Mental health and violent crime are not strongly positively correlated.
+Mental health and poverty are moderately positively correlated.
+Mental health and unemployment rate are slightly positively correlated. 
+Mental health and insurance rate are moderately positively correlated.
 
-Violent crime and poverty are not strongly correlated
-Violent crime and unemployment are not strongly correlated
-Violent crime and insurance rate are not strongly correlated
+Violent crime and poverty are not strongly correlated.
+Violent crime and unemployment are not strongly correlated.
+Violent crime and insurance rate are not strongly correlated.
 
 # Installation
-API keys are public and stored in the config.py file 
-In order to run analysis, processing, loading, user MUST manually download data via instructions in Lara_Li_progres_report
-
-numpy
-pandas (for data cleaning)
-matplotlib (for analysis) 
+API keys are public and stored in the config.py file.
+In order to run analysis, processing, loading, user MUST manually download data via instructions in 'Lara_Li_progres_report'.
+Libraries used: numpy, pandas (for data cleaning), matplotlib (for analysis) 
 
 # Running analysis 
 After manually importing data into 'data/' directory via instructions in 'Lara_Li_progress_report': 

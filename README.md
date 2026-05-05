@@ -33,21 +33,20 @@ Dataset 3:
 
 # Results 
 Variable Analysis: 
-- 
-West Virginia has the highest percentage of the population who are depressed per month (over 20 days out of the month).
-California has the highest amount of violent crime.
-Mississippi faces the highest poverty rates.
-Texas populations have the most people with no health insurance. 
-Nevada has the highest unemployment rate.
+- West Virginia has the highest rate of poor mental health (%) from a 30-day period  
+- New Mexico has the highest rate of violent crime.
+- Louisiana has the highest poverty rate.
+- Texas has the highest rate of no health insurance (%). 
+- Nevada has the highest unemployment rate.
 
-Mental health and violent crime are not strongly positively correlated.
-Mental health and poverty are moderately positively correlated.
-Mental health and unemployment rate are slightly positively correlated. 
-Mental health and insurance rates are moderately positively correlated.
+Scatter Plot Analysis:
+- Mental health and violent crime are slightly positively correlated, but not very strongly
+- outliers and separate clusters exist
 
-Violent crime and poverty are not strongly correlated.
-Violent crime and unemployment are not strongly correlated.
-Violent crime and insurance rates are not strongly correlated.
+Heat Map Analysis:
+- Violent crime and poor mental health have a correlation coefficient of 0.4
+- Poverty rate has the highest correlation with poor mental health
+- Poverty rate also has the highest correlation with violent crime 
 
 # Installation
 API endpoint is public and stored in the config.py file.

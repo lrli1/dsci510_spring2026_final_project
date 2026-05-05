@@ -1,15 +1,39 @@
 # Understanding the Relationship Between Mental Health and Crime Rates Using Socioeconomic Factors
-This project aims to explore the relationship between mental health status and crime rates at the state level using bar charts, correlation calculations, and clustering analysis. Poor untreated mental health can often lead to violence, confusion, and impulsive behavior. Therefore, it is important to address the potential patterns and correlations that may exist. That way, we can implement policy programs, health insurance, mental health shelters, etc., to help solve crime from the ground up rather than top-down. There are many confounders to crime rates as well, so CDC economic data, including health insurance rates, unemployment rates, and poverty rates, are analyzed as well. Mental health is analyzed via a survey on happiness/emotion, and violent crime is measured based on the number of homicides, aggravated assaults, robberies, and rape cases per 100,000 people. 
+This project aims to explore the relationship between mental health status and crime rates at the state level using bar charts, correlation calculations, and clustering analyses. Poor untreated mental health can often lead to violence, confusion, and impulsive behavior. Therefore, it is important to address potential patterns and correlations. That way, we can implement policy programs, health insurance, mental health shelters, etc., to help solve crime from the ground up rather than top-down. There are many confounders to crime rates, so CDC economic data, including health insurance rates, unemployment rates, and poverty rates, are analyzed as well. Mental health is measured as a percentage of survey responses on happiness/emotion, and violent crime is measured based on the number of homicides, aggravated assaults, robberies, and rape cases per 100,000 people. 
 
 # Data sources
-Dataset 1: CDC (Center for Disease Control and Prevention)'s Behavioral Risk Factor Surveillance System (BRFSS) - Mental Health Indicators, API Datatype; API URL: https://data.cdc.gov/resource/5eh7-pjx8.json?$limit=50000; Website URL: https://data.cdc.gov/Mental-Health/Behavioral-Risk-Factor-Surveillance-System-BRFSS-M/5eh7-pjx8/about_data; Description: Mental Health Data by state; Important Features: area, area_name, question, percent; Question: 'Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?'; Format: JSON, Num data points: XXXXXX
+Dataset 1: 
+- _Name_: CDC (Center for Disease Control and Prevention)'s Behavioral Risk Factor Surveillance System (BRFSS) Mental Health Indicators
+- _Datatype_: API
+- _API URL_: https://data.cdc.gov/resource/5eh7-pjx8.json?$limit=50000
+- _Website URL_: https://data.cdc.gov/Mental-Health/Behavioral-Risk-Factor-Surveillance-System-BRFSS-M/5eh7-pjx8/about_data
+- _Description_: Mental Health Data by state
+- _Important Features_: area, area_name, question, percent
+- _Specific question_: 'Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?'
+- _Format_: JSON
+- _Num data points after processing_: 54
 
-Dataset 2: Bureau of Justice Statistics: Crime Known to Law Enforcement 2024; Datatype: Web Page; URL: https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads; Description: Estimates and RMSE for rate of violent victimization by state 2024, Important Features: state, rate per 100000 estimate; Format: CSV
+Dataset 2: 
+- _Name_: Bureau of Justice Statistics: Crime Known to Law Enforcement 2024
+- _Datatype_: Web CSV
+- _URL_: https://gist.githubusercontent.com/lrli1/d560e4d04b6b6e8315900bbe3224fc0c/raw/9dce7b56a93cc5e03e763b87e2dd5e56053525e0/Crime_Data.csv
+- _Description_: Estimates and RMSE for rate of violent victimization by state 2024
+- _Important Features_: state, rate per 100,000 estimate
+- _Format_: CSV
+-_ Num data points after processing_: 45
 
-United States Census Bureau: ACS 5-year Estimates (2020-2025) Selected Economic Characteristics All States in the United States, Datatype: CSV, Website Link: https://data.census.gov/table/ACSDP5YSPT2021.DP03?g=010XX00US$0400000&d=ACS+5-Year+Estimates+Selected+Population+Data+Profiles, Description: 
-Economic demographic data for states in the US, 
+Dataset 3: 
+- _Name_: United States Census Bureau: ACS 5-year Estimates (2020-2025) Selected Economic Characteristics All States in the United States
+- _Datatype_: Web CSV
+- _URL_: https://gist.githubusercontent.com/lrli1/820584669eb70989d4d8d20b47d65e52/raw/809ccd245292102bcbae9a8c2c51f537462376f8/gistfile1.txt
+- _Description_: Economic demographic data for states in the US
+- _Important Features_: NAME, Percent!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people, Percent!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!No health insurance coverage, Percent!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Civilian labor force!!Unemployed
+- _Format_: CSV
+- _Num data points after professing_: 52
 
 # Results 
+Variable Analysis: 
+- 
 West Virginia has the highest percentage of the population who are depressed per month (over 20 days out of the month).
 California has the highest amount of violent crime.
 Mississippi faces the highest poverty rates.

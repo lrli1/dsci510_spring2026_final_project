@@ -46,13 +46,23 @@ Scatter Plot Analysis:
 Heat Map Analysis:
 - Violent crime and poor mental health have a correlation coefficient of 0.4
 - Poverty rate has the highest correlation with poor mental health
-- Poverty rate also has the highest correlation with violent crime 
+- Poverty rate also has the highest correlation with violent crime
+
+Clustering Analysis (no socioeconomic variables):
+Cluster 0: Alabama, California, Colorado, Delaware, Florida, Georgia, Indiana, Kansas, Maryland, Michigan, Missouri, Montana, North Carolina, Nevada, New York, Ohio, Oregon, South Carolina, Texas, Washington, Wisconsin
+
+Cluster 1: Arkansas, Louisiana, New Mexico, Oklahoma, Tennessee, West Virginia
+
+Cluster 2:
+['Connecticut', 'Iowa', 'Idaho', 'Illinois', 'Kentucky', 'Massachusetts', 'Maine', 'Minnesota', 'North Dakota', 'Nebraska', 'New Hampshire', 'New Jersey', 'Rhode Island', 'South Dakota', 'Utah', 'Virginia', 'Vermont', 'Wyoming']
+
+Clustering Analysis (with socioeconomic variables):
 
 # Installation
-API endpoint is public and stored in the config.py file.
-CSV files are public via a web CSV URL, which is stored in the config.py file.
-No further user action is needed to run project.
+The API endpoint is public and stored in the config.py file.
+CSV files are public via a web CSV URL, which is stored in the config.py file as well.
+No further installation is needed to run the project.
 Libraries used include numpy, pandas (for data cleaning), matplotlib (for visualization), sklearn.preprocessing (for cluster scaling), and sklearn.cluster (for cluster analysis).
 
 # Running analysis 
-From 'src/' directory, run 'python3 main.py'. Results will output in both the terminal and in the `results/` directory. Optionally, run 'python3 results.ipynb'. 
+From the 'src/' directory, run 'python3 main.py'. Results will output in the terminal and in the `results/` directory. Optionally, run 'python3 results.ipynb'. 

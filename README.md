@@ -51,20 +51,20 @@ Dataset 3:
 - Poverty rate also has the highest correlation with violent crime
 
 **Clustering Analysis (no socioeconomic variables):**
-- Cluster 0: Alabama, California, Colorado, Delaware, Florida, Georgia, Indiana, Kansas, Maryland, Michigan, Missouri, Montana, North Carolina, Nevada, New York, Ohio, Oregon, South Carolina, Texas, Washington, Wisconsin
+- _Cluster 0_: Alabama, California, Colorado, Delaware, Florida, Georgia, Indiana, Kansas, Maryland, Michigan, Missouri, Montana, North Carolina, Nevada, New York, Ohio, Oregon, South Carolina, Texas, Washington, Wisconsin
 
-- Cluster 1: Arkansas, Louisiana, New Mexico, Oklahoma, Tennessee, West Virginia
+- _Cluster 1:_ Arkansas, Louisiana, New Mexico, Oklahoma, Tennessee, West Virginia
 
-- Cluster 2: Connecticut, Iowa, Idaho, Illinois, Kentucky, Massachusetts, Maine, Minnesota, North Dakota, Nebraska, New Hampshire,  New Jersey, Rhode Island, South Dakota, Utah, Virginia, Vermont, Wyoming
+- _Cluster 2:_ Connecticut, Iowa, Idaho, Illinois, Kentucky, Massachusetts, Maine, Minnesota, North Dakota, Nebraska, New Hampshire,  New Jersey, Rhode Island, South Dakota, Utah, Virginia, Vermont, Wyoming
   
 Cluster 0 represents the moderate states in the middle range, moderate crime and moderate poor mental health. Cluster 1 represents states with high crime and high rates of poor mental health. Cluster 2 represents states with low crime and low rates of poor mental health. This clustering tells us that without socioeconomic variables, there is a slight positive associative pattern. This tells us that crime rates and mental health are related in some way. 
 
 **Clustering Analysis (with socioeconomic variables):**
-- Cluster 0: California, Colorado, Connecticut, Delaware, Illinois, Massachusetts, Maryland, Michigan, New Jersey, New York, Ohio, Oregon, Rhode Island, Washington
+- _Cluster 0_: California, Colorado, Connecticut, Delaware, Illinois, Massachusetts, Maryland, Michigan, New Jersey, New York, Ohio, Oregon, Rhode Island, Washington
 
-- Cluster 1: Iowa, Idaho, Indiana, Kansas, Maine, Minnesota, Montana, North Dakota, Nebraska, New Hampshire, South Dakota, Utah, Virginia, Vermont, Wisconsin, Wyoming 
+- _Cluster 1_: Iowa, Idaho, Indiana, Kansas, Maine, Minnesota, Montana, North Dakota, Nebraska, New Hampshire, South Dakota, Utah, Virginia, Vermont, Wisconsin, Wyoming 
 
-- Cluster 2: Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Missouri, North Carolina, New Mexico, Nevada, Oklahoma, South Carolina, Tennessee, Texas, West Virginia
+- _Cluster 2_: Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Missouri, North Carolina, New Mexico, Nevada, Oklahoma, South Carolina, Tennessee, Texas, West Virginia
 
 After adding in socioeconomic variables, the clusters become more intertwined, and the relationship between mental health and crime is less distinct. There isn't a clear separation boundary between clusters that we can see in the 2D plane. The cluster assignments changed significantly. Therefore, we can conclude that socioeconomic factors also drive mental health and crime. The relationship between mental health and crime is partly driven by underlying socioeconomic factors. 
 

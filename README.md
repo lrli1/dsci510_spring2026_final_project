@@ -34,7 +34,7 @@ Dataset 3:
 - _Num data points after professing_: 52
 
 # Results 
-**Variable Analysis: **
+**Variable Analysis:**
 - West Virginia has the highest rate of poor mental health (%) from a 30-day period  
 - New Mexico has the highest rate of violent crime.
 - Louisiana has the highest poverty rate.

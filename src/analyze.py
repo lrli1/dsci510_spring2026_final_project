@@ -1,102 +1,189 @@
 import os
 import matplotlib.pyplot as plt
+import pandas as pd
 
-# --- PLOT STATISTICS ---
-def plot_statistics(df, dataset_name, result_dir="plots", notebook_plot=False):
-    """
-    Generates and saves basic plots for a given DataFrame.
-    :param result_dir: where to place plots
-    :param df: The pandas DataFrame
-    :param dataset_name: A name for titling plots (e.g., 'Titanic')
-    """
-    print(f"--- Plotting statistics for {dataset_name} ---")
-
+# plot bar chart
+def plot_bar(df, value_col, xlabel, title, result_dir, notebook_plot=False):    
     # Ensure a directory for plots exists
     os.makedirs(result_dir, exist_ok=True)
 
-    # Identify numerical and categorical columns for plotting
-    numerical_cols = df.select_dtypes(include=['int64', 'float64']).columns
-    categorical_cols = df.select_dtypes(include=['object', 'category']).columns
+    plot_df = df[["state_name", value_col]].dropna().sort_values(by=value_col, ascending=False)
 
-    # # Plot 1: Histogram (for a numerical column)
-    # if not numerical_cols.empty:
-    #     col_to_plot = numerical_cols[0]
-    #     plt.figure(figsize=(10, 6))
-    #     df[col_to_plot].hist(bins=30, edgecolor='black')
-    #     plt.title(f'Histogram of {col_to_plot} - {dataset_name}')
-    #     plt.xlabel(col_to_plot)
-    #     plt.ylabel('Frequency')
-    #     plt.grid(axis='y')
-    #     if not notebook_plot:
-    #         plt.savefig(f'{result_dir}/{dataset_name}_histogram.png')
-    #         print(f"Saved histogram for {col_to_plot}")
-    #         plt.close()
-    #     else:
-    #         plt.plot()
+    plt.figure(figsize=(14, 6))
+    plt.bar(plot_df["state_name"], plot_df[value_col], edgecolor="black")
+    plt.title(title)
+    plt.xlabel("State")
+    plt.ylabel(xlabel)
+    plt.xticks(rotation=90)
+    plt.grid(axis="y")
+    plt.tight_layout()
 
-    # Plot 2: Bar Chart (per state)
-    if 'state_name' in df.columns and not numerical_cols.empty:
-        col_to_plot = numerical_cols[0]
-        df_sorted = df.sort_values(col_to_plot, ascending=False)
-        plt.figure(figsize=(14, 6))
-        plt.bar(df_sorted['state_name'], df_sorted[col_to_plot], edgecolor='black')
-        plt.title(f'{col_to_plot} by State - {dataset_name}')
-        plt.xlabel('State')
-        plt.ylabel(col_to_plot)
-        plt.xticks(rotation=90)
-        plt.grid(axis='y')
-        plt.tight_layout()
-        if not notebook_plot:
-            plt.savefig(f'{result_dir}/{dataset_name}_barchart.png')
-            print(f"Saved bar chart for {col_to_plot} by state")
-            plt.close()
-        else:
-            plt.plot()
+    if not notebook_plot:
+        filename = f"{value_col}_barchart.png"
+        plt.savefig(f"{result_dir}/{filename}")
+        print(f"Saved bar chart for {value_col}")
+        plt.close()
+    else:
+        plt.show()
 
-    # Plot 3: Scatter Plot (for two numerical columns)
-    if len(numerical_cols) >= 2:
-        col1 = numerical_cols[0]
-        col2 = numerical_cols[1]
-        plt.figure(figsize=(10, 6))
-        plt.scatter(df[col1], df[col2], alpha=0.5)
-        plt.title(f'Scatter Plot: {col1} vs {col2} - {dataset_name}')
-        plt.xlabel(col1)
-        plt.ylabel(col2)
-        plt.grid(True)
-        if not notebook_plot:
-            plt.savefig(f'{result_dir}/{dataset_name}_scatterplot.png')
-            print(f"Saved scatter plot for {col1} vs {col2}")
-            plt.close()
-        else:
-            plt.plot()
+# plot scatter plot 
+def plot_scatter(df, x_col, y_col, xlabel, ylabel, title, result_dir,notebook_plot=False):
+    os.makedirs(result_dir, exist_ok=True)
+
+    # check columns exist
+    if x_col not in df.columns or y_col not in df.columns:
+        raise ValueError("Columns not found in DataFrame")
+
+    plot_df = df[[x_col, y_col]].dropna()
+    plt.figure(figsize=(8, 6))
+    plt.scatter(plot_df[x_col], plot_df[y_col])
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    plt.grid(True)
+    plt.tight_layout()
+
+    if not notebook_plot:
+        filename = f"{y_col}_vs_{x_col}_scatter.png"
+        plt.savefig(f"{result_dir}/{filename}")
+        print(f"Saved scatter plot: {filename}")
+        plt.close()
+    else:
+        plt.show()
+
+# plot heat map
+def plot_heatmap(df, result_dir,notebook_plot=False):
+
+    os.makedirs(result_dir, exist_ok=True)
+
+    # keep only numeric columns
+    numeric_df = df.select_dtypes(include=["int64", "float64"]).dropna()
+
+    # correlation matrix
+    corr = numeric_df.corr()
+
+    plt.figure(figsize=(8, 6))
+    plt.imshow(corr, cmap="YlOrRd")
+
+    cols = corr.columns
+    label_map = {'mental_health_pct': 'Poor Mental Health (%) – Past 30 Days','rate_per_100k': 'Violent Crime Rate (per 100k)','poverty_rate': 'Poverty Rate','no_insurance_pct': '% No Insurance','unemployment_rate': 'Unemployment Rate'}
+    labels = [label_map.get(col, col) for col in cols]
+    plt.xticks(range(len(cols)), labels, rotation=45, ha='right')
+    plt.yticks(range(len(cols)),labels)
+
+    # add correlation values
+    for i in range(len(cols)):
+        for j in range(len(cols)):
+            plt.text(j, i, f"{corr.iloc[i, j]:.2f}",
+                     ha='center', va='center')
+
+    plt.title(f"Correlation Heatmap")
+    plt.colorbar()
+    plt.tight_layout()
+
+    if not notebook_plot:
+        filename = f"heatmap.png"
+        plt.savefig(f"{result_dir}/{filename}")
+        print(f"Saved heatmap: {filename}")
+        plt.close()
+    else:
+        plt.show()
 
 
-## check
-# if __name__ == "__main__":
-#     from config import CDC_API_URL, FBI_XLSX_PATH, CENSUS_CSV_PATH, RESULTS_DIR
-#     from load import get_mental_health_data, get_crime_data, get_census_data
-#     from process import process_cdc_data, process_crime_data, process_census_data, merge_datasets
+# clustering analysis
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
 
-#     cdc_df = process_cdc_data(get_mental_health_data(CDC_API_URL))
-#     fbi_df = process_crime_data(get_crime_data(FBI_XLSX_PATH))
-#     census_df = process_census_data(get_census_data(CENSUS_CSV_PATH))
-#     merged = merge_datasets(cdc_df, fbi_df, census_df)
+def run_clustering(df, result_dir="results", notebook_plot=False, n_clusters=3):
+    os.makedirs(result_dir, exist_ok=True)
+    
+    # keep important columns
+    plot_df = df[['state_name', 'mental_health_pct', 'rate_per_100k']].dropna().copy()
 
-#     # bar graphs 
-#     plot_statistics(merged[['state_name', 'mental_health_pct']], 'CDC_Mental_Health', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['state_name', 'violent_crime']], 'FBI_Crime', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['state_name', 'poverty_rate']], 'Census_Poverty', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['state_name', 'no_insurance_pct']], 'Census_Insurance', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['state_name', 'unemployment_rate']], 'Census_Unemployment', result_dir=RESULTS_DIR)
+    # scale 
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(plot_df[['mental_health_pct', 'rate_per_100k']])
 
-#     #scatter plots
-#     plot_statistics(merged[['mental_health_pct', 'violent_crime']], 'MentalHealth_vs_Crime', result_dir=RESULTS_DIR)
-#     # mental health vs census features
-#     plot_statistics(merged[['mental_health_pct', 'poverty_rate']], 'MentalHealth_vs_Poverty', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['mental_health_pct', 'unemployment_rate']], 'MentalHealth_vs_Unemployment', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['mental_health_pct', 'no_insurance_pct']], 'MentalHealth_vs_Insurance', result_dir=RESULTS_DIR)
-#     # crime vs census features
-#     plot_statistics(merged[['violent_crime', 'poverty_rate']], 'Crime_vs_Poverty', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['violent_crime', 'unemployment_rate']], 'Crime_vs_Unemployment', result_dir=RESULTS_DIR)
-#     plot_statistics(merged[['violent_crime', 'no_insurance_pct']], 'Crime_vs_Insurance', result_dir=RESULTS_DIR)
+    # clustering 
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+    plot_df['cluster'] = kmeans.fit_predict(X_scaled)
 
+    # plot clusters 
+    plt.figure(figsize=(8, 6))
+
+    for cluster_id in sorted(plot_df['cluster'].unique()):
+        subset = plot_df[plot_df['cluster'] == cluster_id]
+        plt.scatter(
+            subset['mental_health_pct'],
+            subset['rate_per_100k'],
+            label=f'Cluster {cluster_id}'
+        )
+
+    # list of states per cluster
+    for cluster_id, group in plot_df.groupby('cluster'):
+        print(f"\nCluster {cluster_id}:")
+        print(group['state_name'].to_list())
+
+    plt.xlabel('Poor Mental Health (%) – Past 30 Days')
+    plt.ylabel('Violent Crime Rate (per 100k)')
+    plt.title(f'Mental Health & Crime (Clusters)')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+
+
+    if not notebook_plot:
+        filename = f"mh_vs_crime_clusters.png"
+        plt.savefig(f"{result_dir}/{filename}")
+        print(f"Saved clustering plot: {filename}")
+        plt.close()
+    else:
+        plt.show()
+
+def run_clustering_confound(df, result_dir, notebook_plot=False, n_clusters=3):
+    os.makedirs(result_dir, exist_ok=True)
+    cols = ["state_name","mental_health_pct","rate_per_100k", "poverty_rate", "no_insurance_pct", "unemployment_rate"]
+    cluster_df = df[cols].dropna().copy()
+
+    # keep important cols
+    feature_cols = ["mental_health_pct","rate_per_100k", "poverty_rate", "no_insurance_pct", "unemployment_rate"]
+
+    # scale
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(cluster_df[feature_cols])
+
+    # clustering
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+    cluster_df["cluster"] = kmeans.fit_predict(X_scaled)
+
+    # plot mental health vs crime 
+    plt.figure(figsize=(8, 6))
+
+    for cluster_id in sorted(cluster_df["cluster"].unique()):
+        subset = cluster_df[cluster_df["cluster"] == cluster_id]
+        plt.scatter(
+            subset["mental_health_pct"],
+            subset["rate_per_100k"],
+            label=f"Cluster {cluster_id}",
+            alpha=0.8
+        )
+
+    # list of states per cluster
+    for cluster_id, group in cluster_df.groupby('cluster'):
+        print(f"\nCluster {cluster_id}:")
+        print(group['state_name'].to_list())
+
+    plt.xlabel("Poor Mental Health (%) – Past 30 Days")
+    plt.ylabel("Violent Crime Rate (per 100k)")
+    plt.title(f"Mental Health & Crime (Clusters Adjusted for Socioeconomic Factors)")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+
+    if not notebook_plot:
+        filename = f"mh_vs_crime_clusters_confound.png"
+        plt.savefig(f"{result_dir}/{filename}")
+        print(f"Saved clustering plot: {filename}")
+        plt.close()
+    else:
+        plt.show()

@@ -1,67 +1,53 @@
 # include your tests here
-from load import get_mental_health_data, get_crime_data, get_census_data
+from load import get_json_data, get_csv_data
 from process import process_cdc_data, process_crime_data, process_census_data, merge_datasets
-from config import CDC_API_URL, FBI_XLSX_PATH, CENSUS_CSV_PATH
-
-def test_cdc_api_returns_data():
-    df = get_mental_health_data(CDC_API_URL)
-    if df is None or len(df) == 0:
-        print("FAIL: CDC API returned no data")
-    else:
-        print(f"PASS: CDC API returned {len(df)} rows")
-
-def test_cdc_api_has_expected_columns():
-    df = get_mental_health_data(CDC_API_URL)
-    if 'area' not in df.columns:
-        print("FAIL: Missing 'area' column")
-    elif 'percent' not in df.columns:
-        print("FAIL: Missing 'percent' column")
-    else:
-        print("PASS: CDC API has expected columns")
-
-def test_crime_data_loads():
-    df = get_crime_data(FBI_XLSX_PATH)
-    if df is None or len(df) == 0:
-        print("FAIL: Crime data returned no data")
-    else:
-        print(f"PASS: FBI crime data loaded {len(df)} rows")
-
-def test_census_data_loads():
-    df = get_census_data(CENSUS_CSV_PATH)
-    if df is None or len(df) == 0:
-        print("FAIL: Census data returned no data")
-    else:
-        print(f"PASS: Census data loaded {len(df)} rows")
-
-def test_cdc_processing():
-    raw = get_mental_health_data(CDC_API_URL)
-    df = process_cdc_data(raw)
-    if len(df) == 0:
-        print("FAIL: CDC processed data is empty")
-    elif 'mental_health_pct' not in df.columns:
-        print("FAIL: Missing mental_health_pct column")
-    else:
-        print(f"PASS: CDC data processed into {len(df)} states")
-
-def test_merge_datasets():
-    cdc = process_cdc_data(get_mental_health_data(CDC_API_URL))
-    fbi = process_crime_data(get_crime_data(FBI_XLSX_PATH))
-    census = process_census_data(get_census_data(CENSUS_CSV_PATH))
-    merged = merge_datasets(cdc, fbi, census)
-    if len(merged) == 0:
-        print("FAIL: Merged dataset is empty")
-    elif 'mental_health_pct' not in merged.columns:
-        print("FAIL: Missing mental_health_pct column")
-    elif 'violent_crime' not in merged.columns:
-        print("FAIL: Missing violent_crime column")
-    else:
-        print(f"PASS: Datasets merged into {len(merged)} rows")
+from config import CDC_URL, FBI_URL, CENSUS_URL, RESULTS_DIR, DATA_DIR
+from analyze import plot_bar, plot_scatter, plot_heatmap, run_clustering
 
 if __name__ == "__main__":
-    test_cdc_api_returns_data()
-    test_cdc_api_has_expected_columns()
-    test_crime_data_loads()
-    test_census_data_loads()
-    test_cdc_processing()
-    test_merge_datasets()
-    print("\nTests complete")
+    
+    # get CDC cleaned data
+    cdc_raw = get_json_data(CDC_URL)
+    cdc = process_cdc_data(cdc_raw)
+    print(cdc.head())
+
+    # check
+    if cdc is None or len(cdc) == 0:
+        print("FAIL: CDC DF returned no data")
+    else:
+        print(f"CDC DF returned {len(cdc)} rows")
+
+    # get crime cleaned data
+    fbi_raw = get_csv_data(FBI_URL)
+    fbi = process_crime_data(fbi_raw)
+    print(fbi.head())
+
+    # check
+    if fbi is None or len(fbi) == 0:
+        print("FAIL: FBI DF returned no data")
+    else:
+        print(f"FBI DF returned {len(fbi)} rows")
+
+    # get census cleaned data
+    census_raw = get_csv_data(CENSUS_URL)
+    census = process_census_data(census_raw)
+    print(census.head())
+
+    # check 
+    if census is None or len(census) == 0:
+        print("FAIL: Census DF returned no data")
+    else:
+        print(f"Census DF returned {len(census)} rows")
+
+    # merge data
+    merged = merge_datasets(cdc, fbi, census)
+    print(merged.columns.tolist())
+    print(merged.head())
+
+    # check
+    if merged is None or len(merged) == 0:
+        print("FAIL: Merge returned no data")
+    else:
+        print(f"Merge returned {len(merged)} rows")
+
+

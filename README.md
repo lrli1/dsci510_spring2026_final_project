@@ -78,3 +78,6 @@ Libraries used include numpy, pandas (for data cleaning), matplotlib (for visual
 
 # Running analysis 
 From the 'src/' directory, run 'python3 main.py'. Results will output in the terminal and in the `results/` directory. Optionally, run 'python3 results.ipynb'. 
+
+# AI usage 
+For my clustering analysis, AI in the form of Google Gemini engine searches was used to see which packages and tools to use. Prior knowledge of coding and ML pipelines helped shape the rest of the code. 

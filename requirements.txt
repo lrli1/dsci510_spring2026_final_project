@@ -1,6 +1,8 @@
 numpy
 pandas
-scikit-learn
-kaggle
-kagglehub
+requests
+matplotlib
+sklearn.preprocessing
+sklearn.cluster
 python-dotenv
+pathlib
